@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: url('./temp/background.png') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            display: block;
+        }
+
+        .top-bar, .bottom-bar {
+            width: 100%;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            left: 0;
+        }
+
+        .top-bar {
+            top: 0;
+        }
+
+        .bottom-bar {
+            bottom: 0;
+        }
+
+        .content {
+            width: 60%;
+            min-height: 80vh;
+            background: white;
+            margin-top: 60px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: gray;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            margin-left: 20px;
+        }
+
+        .status {
+            font-size: 14px;
+            color: green;
+        }
+
+        .details {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .awards img {
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+        }
+
+        .tabs {
+            display: flex;
+            width: 100%;
+            background: #f4f4f4;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-right: 1px solid #ddd;
+        }
+
+        .tab:last-child {
+            border-right: none;
+        }
+
+        .tab:hover, .tab.active {
+            background: #ddd;
+        }
+
+        .tab-content {
+            width: 100%;
+            padding: 20px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+    <script>
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`#${tabName}`).classList.add('active');
+
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+        }
+
+        function showTime(period) {
+            const times = {
+                'day': '5 часов за день',
+                'week': '30 часов за неделю',
+                'month': '90 часов за месяц',
+                'all': '100 часов всего'
+            };
+            document.getElementById('time-display').innerText = times[period];
+        }
+    </script>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="content">
+    <div class="header">
+        <div class="avatar"></div>
+        <div class="user-info">
+            <h2>Имя пользователя</h2>
+            <div class="status">🔵 Онлайн</div>
+        </div>
+        <div class="details">
+            <div class="level">Уровень: 10</div>
+            <div class="privilege">Привилегия: VIP</div>
+            <div class="awards">
+                <h4>тут значки</h4>
+                <img src="award1.png">
+                <img src="award2.png">
+                <img src="admin.png">
+            </div>
+        </div>
+    </div>
+    <div class="tabs">
+        <div class="tab active" data-tab="stats" onclick="showTab('stats')">Статистика</div>
+        <div class="tab" data-tab="settings" onclick="showTab('settings')">Настройки</div>
+        <div class="tab" data-tab="friends" onclick="showTab('friends')">Друзья</div>
+        <div class="tab" data-tab="storage" onclick="showTab('storage')">Склад</div>
+        <div class="tab" data-tab="test" onclick="showTab('test')">Тест вкладка</div>
+    </div>
+    <div id="stats" class="tab-content active">
+        <h3>О себе</h3>
+        <p>Какой то текст</p>
+        <h3>Уровень</h3>
+        <p>Линия опыта с числами "сколько/максимально | процент"</p>
+        <h3>Время на сервере</h3>
+        <div class="time-buttons">
+            <button onclick="showTime('day')">День</button>
+            <button onclick="showTime('week')">Неделя</button>
+            <button onclick="showTime('month')">Месяц</button>
+            <button onclick="showTime('all')">Всё</button>
+        </div>
+        <p id="time-display">100 часов всего</p>
+        <h3>Валюта</h3>
+        <p>1000 в.е.</p>
+        <h3>Статистика/достижения</h3>
+        <p>Картинка, название, описание</p>
+        <p>Можно сделать так же как в безопасности - история входов</p>
+        <h3>Текущие квесты</h3>
+        <p>Какой то квест: 42%</p>
+    </div>
+    <div id="settings" class="tab-content">
+        <h3>Безопасность</h3>
+        <p>Смена пароля (/ника)</p>
+        <p>Подтверждение/смена почты</p>
+        <p>Двухфакторная аутентификация (если нужна)</p>
+        <p onclick="showTab('login-history')" style="cursor: pointer; text-decoration: underline; color: blue;">История входов</p>
+        <p>Привязка соцсетей (дс, вк и тд)</p>
+        <h3>Приватность</h3>
+        <p>Смена скина/аватарки</p>
+        <h4>Скрытие профиля</h4>
+        <label for="visibility">Время на сервере:</label>
+        <select id="visibility" name="visibility">
+            <option value="all">Все</option>
+            <option value="friends">Друзья</option>
+            <option value="none">Никто</option>
+        </select>
+        <label for="...">Достижения...</label>
+        <h3>Полезные ресурсы</h3>
+        <p><a href="#">Часто задаваемые вопросы</a></p>
+    </div>
+    <div id="login-history" class="tab-content">
+        <button class="back-button" onclick="showTab('settings')">⬅ Назад</button>
+        <h3>История входов</h3>
+        <ul>
+            <li>10.03.2025 - 18:45 - Какой то город, страна</li>
+            <li>09.03.2025 - 14:20 - ...</li>
+            <li>07.03.2025 - 22:10 - ...</li>
+        </ul>
+    </div>
+    <div id="friends" class="tab-content">
+        <h3>Друзья</h3>
+        <h4>Добавить друга</h4>
+        <input type="text" placeholder="Введите ник">
+        <button>Отправить заявку</button>
+        <h4>Заявки в друзья (<span>2</span>)</h4>
+        <div class="friend-requests">
+            <p>ВозможныйДруг1
+                <button>✔</button>
+                <button>✖</button>
+            </p>
+            <p>ВозможныйДруг1
+                <button>✔</button>
+                <button>✖</button>
+            </p>
+        </div>
+        <h4>Список друзей</h4>
+        <div class="friends-list">
+            <p>🟢 Друг1 (онлайн)
+                <button>✖</button>
+            </p>
+            <p>⚪ Друг2 (был 2 часа назад)
+                <button>✖</button>
+            </p>
+            <p>⚪ Друг3 (был давно)
+                <button>✖</button>
+            </p>
+        </div>
+    </div>
+    <div id="storage" class="tab-content">
+        <h3>Склад и История покупок</h3>
+        <h4>Ваши покупки</h4>
+        <div class="purchased-items">
+            <p>VIP (осталось 12 дней)</p>
+            <p>Какой то предмет</p>
+            <p>Еще что то</p>
+        </div>
+        <h4>История покупок</h4>
+        <div class="purchase-history">
+            <p>10.01.2025 — VIP (1 месяц) — Оплата: PayPal</p>
+            <p>10.01.2025 — Какой то предмет — Оплата: ...</p>
+            <p>10.01.2025 — Еще что то — Оплата: ...</p>
+        </div>
+        <h4>Промокоды</h4>
+        <input type="text" placeholder="Введите промокод">
+        <button>Активировать</button>
+    </div>
+
+    <div id="test" class="tab-content">
+        <h3>Блок может быть длинее страницы</h3>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
+    </div>
+</div>
+<div class="bottom-bar"></div>
+</body>
+</html>
